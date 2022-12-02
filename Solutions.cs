@@ -16,7 +16,7 @@ public class Solutions
 		int top3Calories = 0;
 		List<Elf> top3Elves = Elf.topCalories(elves, 3);
 
-		Console.WriteLine("\n  Top 3 calorie-carrying elves:\n");
+		Console.WriteLine("\n  Day 1: Top calorie-carrying elves:\n");
 
 		foreach (Elf e in top3Elves)
 		{
@@ -35,24 +35,35 @@ public class Solutions
 	// 1, 2, or 3 points respectively, a tie awards 3 extra points and a win
 	// awards 6 extra points, calculate your final score at the end of the
 	// tournament if you play as indicated.
+	//
+	// Oh, but there was a misunderstanding! The latter letters in the strategy
+	// guide actually meant whether you should lose (X), tie (Y) or win (Z) the
+	// round, picking your move according to the opponents expected move.
 	public static void day2()
 	{
 		string input = "input/day-2.txt";
 
-		Console.WriteLine("\n Rock Paper Scissors tournament:\n");
+		Console.WriteLine("\n  Day 2: Rock Paper Scissors tournament:\n");
+		Console.WriteLine("\tWe are player 2.\n");
+		rps.Game g = new rps.Game();
+		List<string> strategyGuide = Files.GetContentAsList(input);
 
-		foreach (string s in new string[]{"A", "B", "C"})
+		foreach (string s in strategyGuide)
 		{
-			rps.Move my = new rps.Move(s);
-			/* Console.Write($"{s} parsed is {my}."); */
-
-			foreach (string t in new string[]{"X", "Y", "Z"})
-			{
-				rps.Move their = new rps.Move(t);
-				/* Console.Write($" It {outcome} against {their}."); */
-				Console.WriteLine($"{new rps.Round(my, their)}");
-			}
-			Console.WriteLine("");
+			(rps.Move p1, rps.Move p2) moves = rps.Strategy.ParseNaive(s);
+			g.Play(moves.p1, moves.p2);
 		}
+		
+		Console.WriteLine($"\tPlaying naively: {g}");
+
+		g = new rps.Game();
+
+		foreach (string s in strategyGuide)
+		{
+			(rps.Move p1, rps.Move p2) moves = rps.Strategy.ParseCunning(s);
+			g.Play(moves.p1, moves.p2);
+		}
+
+		Console.WriteLine($"\n\tPlaying cunningly: {g}");
 	}
 }
