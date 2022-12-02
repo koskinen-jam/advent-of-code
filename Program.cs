@@ -1,3 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿Solutions.day1();
+Solutions.day2();
 
-Solutions.day1();
