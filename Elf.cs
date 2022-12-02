@@ -36,13 +36,12 @@ public class Elf
 	// ```
 	// Each line in the input is expected to contain either an integer or nothing.
 	// Elves are separated by empty lines
-	public static List<Elf> parseCalorieStream(StreamReader sr)
+	public static List<Elf> parseFile(string path)
 	{
 		List<Elf> elves = new List<Elf>();
 		Elf e = new Elf();
-		string s;
 
-		while ((s = sr.ReadLine()) != null)
+		foreach (string s in Files.GetContentAsList(path))
 		{
 			if (s == "")
 			{
