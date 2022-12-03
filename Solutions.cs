@@ -1,4 +1,5 @@
 using rps = RockPaperScissors;
+using rck = Rucksack;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -76,11 +77,45 @@ public class Solutions
 	// according to their letter, a-z being 1-26 and A-Z being 27-52. Now find
 	// the sum of the priorities of each item that is common to both compartments
 	// to its rucksack.
+	//
+	// And the twist: Each consequent group of three rucksacks contains a key item
+	// that is a type of item that appears in each rucksack (compartment does not
+	// matter). Find the sum of the priorities of those key items.
 	public static void day3()
 	{
 		Console.WriteLine("\n  Day 3: Rucksack Reorganization:\n");
 
 		string input = "input/day-3.txt";
 
+		int totalPrio = 0;
+		List<rck.Sack> sacks = new List<rck.Sack>();
+
+		foreach (string s in Files.GetContentAsList(input))
+		{
+			rck.Sack sack = rck.Sack.FromString(s);
+			rck.Item? common = sack.FindCommon();
+
+			if (common != null)
+			{
+				totalPrio += common.priority;
+			}
+
+			sacks.Add(sack);
+		}
+
+		Console.WriteLine($"\tTotal priority of items found in both compartments of their sacks: {totalPrio}\n");
+
+		int totalKeyPrio = 0;
+
+		for (int i = 0; i < sacks.Count; i += 3)
+		{
+			rck.Item? common = sacks[i].FindCommon(sacks[i + 1], sacks[i + 2]);
+			if (common != null)
+			{
+				totalKeyPrio += common.priority;
+			}
+		}
+		
+		Console.WriteLine($"\tTotal priority of group key items: {totalKeyPrio}");	
 	}
 }
