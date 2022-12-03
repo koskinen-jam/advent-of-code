@@ -1,5 +1,6 @@
 *.swp
 *.exe
+*Zone.Identifier
 bin/*
 obj/*
 
