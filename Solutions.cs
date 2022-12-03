@@ -9,14 +9,14 @@ public class Solutions
 	// Elves are separated by empty rows.
 	public static void day1()
 	{
+		Console.WriteLine("\n  Day 1: Top calorie-carrying elves:\n");
+
 		string input= "input/day-1.txt";
 
 		List<Elf> elves = Elf.parseFile(input);
 
 		int top3Calories = 0;
 		List<Elf> top3Elves = Elf.topCalories(elves, 3);
-
-		Console.WriteLine("\n  Day 1: Top calorie-carrying elves:\n");
 
 		foreach (Elf e in top3Elves)
 		{
@@ -41,11 +41,13 @@ public class Solutions
 	// round, picking your move according to the opponents expected move.
 	public static void day2()
 	{
-		string input = "input/day-2.txt";
-
 		Console.WriteLine("\n  Day 2: Rock Paper Scissors tournament:\n");
 		Console.WriteLine("\tWe are player 2.\n");
+
+		string input = "input/day-2.txt";
+
 		rps.Game g = new rps.Game();
+
 		List<string> strategyGuide = Files.GetContentAsList(input);
 
 		foreach (string s in strategyGuide)
@@ -65,5 +67,20 @@ public class Solutions
 		}
 
 		Console.WriteLine($"\n\tPlaying cunningly: {g}");
+	}
+
+	// Given a list of rucksack contents as strings where each item is represented
+	// by a lower- or uppercase letter, and the first and last halves of the
+	// string representing the two compartments of a rucksack, first find which
+	// item is present in both compartments of each rucksack. Items have priorities
+	// according to their letter, a-z being 1-26 and A-Z being 27-52. Now find
+	// the sum of the priorities of each item that is common to both compartments
+	// to its rucksack.
+	public static void day3()
+	{
+		Console.WriteLine("\n  Day 3: Rucksack Reorganization:\n");
+
+		string input = "input/day-3.txt";
+
 	}
 }
