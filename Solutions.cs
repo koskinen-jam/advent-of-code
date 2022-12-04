@@ -118,4 +118,35 @@ public class Solutions
 		
 		Console.WriteLine($"\tTotal priority of group key items: {totalKeyPrio}");	
 	}
+
+	// Given a list of pairs of section ID ranges, find the number of pairs where
+	// one range fully contains the other (e.g. in "4-5,7-10", neither does, and
+	// in "3-5,2-8", the second contains the first.)
+	public static void day4()
+	{
+		Console.WriteLine("\n  Day 4: Camp Cleanup:\n");
+
+		string input = "input/day-4.txt";
+
+		int pairsWithFullContainment = 0;
+		int pairsWithOverlap = 0;
+
+		foreach (string s in Files.GetContentAsList(input))
+		{
+			IdRange[] ranges = IdRange.ParsePair(s);
+			if (ranges[0].Contains(ranges[1]) || ranges[1].Contains(ranges[0]))
+			{
+				pairsWithFullContainment++;
+			}
+
+			if (ranges[0].Overlaps(ranges[1]))
+			{
+				pairsWithOverlap++;
+			}
+		}
+
+		Console.WriteLine($"\tNumber of pairs where one range fully contains the other one: {pairsWithFullContainment}\n");
+
+		Console.WriteLine($"\tNumber of pairs with overlap: {pairsWithOverlap}");
+	}
 }
