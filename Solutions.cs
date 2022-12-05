@@ -1,5 +1,6 @@
 using rps = RockPaperScissors;
 using rck = Rucksack;
+using sps = SupplyStacks;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -148,5 +149,54 @@ public class Solutions
 		Console.WriteLine($"\tNumber of pairs where one range fully contains the other one: {pairsWithFullContainment}\n");
 
 		Console.WriteLine($"\tNumber of pairs with overlap: {pairsWithOverlap}");
+	}
+
+	// Given a drawing of the starting state of a set of stacks of crates and a list
+	// of moves telling how many crates are moves one at a time from which stack
+	// to which, what is the word produced by the top crates of each stack once
+	// all the listed moves have been made?
+	//
+	// Drawing:
+	//
+	//     [X]
+	// [A] [B]
+	// [D] [N] [P]
+	//  1   2   3
+	//
+	// Move list:
+	//
+	// move 1 from 2 to 3 (X goes on top of stack 3)
+	// move 2 from 1 to 2 (AD goes on top of stack 2, reversed to DA)
+	// move 1 from 3 to 1 (X goes on top of stack 1)
+	// move 2 from 2 to 3 (DA goes on top of stack 3, reversed back to AD)
+	//
+	//         [A]
+	//     [B] [D]
+	// [X] [N] [P]
+	//  1   2   3
+	public static void day5()
+	{
+		Console.WriteLine("\n  Day 5: Supply Stacks\n");
+
+		string input = "input/day-5.txt";
+
+		List<string> inputLines = Files.GetContentAsList(input);
+
+		sps.Supply supply = sps.Supply.Parse(inputLines);
+
+		Console.WriteLine($"Initial state:\n\n{supply}\n");
+		supply.Move(inputLines);
+
+		Console.WriteLine($"Moving one crate at a time\n\n{supply}\n");
+
+		Console.WriteLine($"They spell out: {supply.TopWord}");
+
+		supply = sps.Supply.Parse(inputLines);
+		supply.MoveMultiple = true;
+		supply.Move(inputLines);
+
+		Console.WriteLine($"Moving multiple crates at a time\n\n{supply}\n");
+
+		Console.WriteLine($"They spell out: {supply.TopWord}");
 	}
 }
