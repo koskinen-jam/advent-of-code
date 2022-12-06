@@ -199,4 +199,26 @@ public class Solutions
 
 		Console.WriteLine($"They spell out: {supply.TopWord}");
 	}
+
+	// A start-of-packet marker is four consecutive characters that are all different from each
+	// other. A start-of-message marker is the same, but fourteen characters long.
+	//
+	// Given a string, how many characters do you need to analyze before you have found a
+	// start-of-packet marker? What about a start-of-message marker?
+	public static void day6()
+	{
+		Console.WriteLine("\n  Day 6: Tuning Trouble");
+
+		string input = "input/day-6.txt";
+
+		Strings.Finder f = new Strings.Finder(Strings.Finder.AllUniqueChars, 4);
+
+		string buffer = Files.GetContentAsList(input)[0];
+
+		Console.WriteLine($"\nStart of packet marker found after analyzing {f.Find(buffer)} characters.");
+
+		f.BufferLength = 14;
+
+		Console.WriteLine($"\nStart of message marker found after analyzing {f.Find(buffer)} characters.");
+	}
 }
