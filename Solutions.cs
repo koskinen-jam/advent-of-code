@@ -1,6 +1,7 @@
 using rps = RockPaperScissors;
 using rck = Rucksack;
 using sps = SupplyStacks;
+using drt = DirectoryTree;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -220,5 +221,58 @@ public class Solutions
 		f.BufferLength = 14;
 
 		Console.WriteLine($"\nStart of message marker found after analyzing {f.Find(buffer)} characters.");
+	}
+
+	// Given a list of directory-changing and listing commands and their output, find the sum of the sizes
+	// of all the directories with total size less than or equal to 100000. The size of a directory is
+	// the sum of the sizes of the files and directories in it. A subdirectory may be counted multiple times:
+	// First by itself, and again as a part of its containing directory.
+	//
+	// Additionally, given a total disk size and a minimum free space requirement, find the smallest
+	// directory large enough to bring the free disk space over the minimum.
+	public static void day7()
+	{
+		Console.WriteLine("\n  Day 7: No Space Left On Device\n");
+
+		string input = "input/day-7.txt";
+
+		List<string> inputLines = Files.GetContentAsList(input);
+
+		drt.Parser parser = new drt.Parser(inputLines);
+		drt.Node root = parser.Parse();
+		
+		List<drt.Node> dirsFound = root.Find((drt.Node n) => { return ! n.IsFile && n.Size <= 100000; });
+
+		Console.WriteLine("Directories at most 100000 units large\n");
+		int total = 0;
+		
+		foreach (drt.Node n in dirsFound)
+		{
+			total += n.Size;
+			Console.WriteLine($"{total, 10} {n}");
+		}
+		Console.WriteLine($"\n           Total {total} bytes\n");
+
+		int totalSpace = 70000000;
+		int minimumFreeRequired = 30000000;
+
+		int free = totalSpace - root.Size;
+		int needToFree = minimumFreeRequired - free;
+
+		Console.WriteLine($"System has total {totalSpace} units of disk. Installation requires {minimumFreeRequired}.");
+		Console.WriteLine($"Current free space {free} units, need to free {needToFree} more.");
+
+		List<drt.Node> found = root.Find((drt.Node n) => { return ! n.IsFile && n.Size >= needToFree; });
+		
+		found.Sort(drt.Node.CompareNodesBySize);
+
+		Console.WriteLine($"Directories larger than {needToFree}:\n");
+
+		foreach (drt.Node n in found)
+		{
+			Console.WriteLine($"{n} - {n.Path}");
+		}
+
+		Console.WriteLine($"\nThe smallest one is {found[0].Path} at {found[0].Size} units.");
 	}
 }
