@@ -2,6 +2,7 @@ using rps = RockPaperScissors;
 using rck = Rucksack;
 using sps = SupplyStacks;
 using drt = DirectoryTree;
+using thm = TreeHeightMap;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -274,5 +275,29 @@ public class Solutions
 		}
 
 		Console.WriteLine($"\nThe smallest one is {found[0].Path} at {found[0].Size} units.");
+	}
+
+	// Given a map of tree heights, find the number of trees that are visible from at least one map edge.
+	// A tree is visible if it is on a map edge, or all the trees between it and the map edge are shorter.
+	//
+	// Find the maximum scenic score among the trees. The scenic score is calculated by multiplying together
+	// the visibilities in all the cardinal directions from a given tree. Visibility is blocked by a tree
+	// that is at least as tall as the tree being looked from.
+	public static void day8()
+	{
+		Console.WriteLine("\n  Day 8: Treetop Tree House\n");
+
+		List<string> input = Files.GetContentAsList("input/day-8.txt");
+
+		thm.Map map = thm.Map.Parse(input);
+
+		Console.WriteLine($"\nFull map:\n{map}\n");
+		Console.WriteLine($"\nVisible trees:\n{map.VisibleToString()}\n");
+		Console.WriteLine($"Number of visible trees: {map.VisibleTreeCount}");
+
+		Console.WriteLine($"Maximum scenic score among the trees is: {map.MaxScenicScore}");
+
+		Console.WriteLine($"Tree with best scenic score:\n{map.TreeWithHighestScenicScore}");
+
 	}
 }

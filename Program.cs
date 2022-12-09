@@ -4,4 +4,5 @@
 /* Solutions.day4(); */
 /* Solutions.day5(); */
 /* Solutions.day6(); */
-Solutions.day7();
+/* Solutions.day7(); */
+Solutions.day8();
