@@ -4,6 +4,7 @@ using sps = SupplyStacks;
 using drt = DirectoryTree;
 using thm = TreeHeightMap;
 using rb = RopeBridge;
+using crt = CathodeRayTube;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -333,5 +334,40 @@ public class Solutions
 
 		Console.WriteLine("\tRope with 10 segments:\n");
 		r.Show();
+	}
+
+	// Measure the signal strengths of a device during the 20th cycle and during every 40th cycle after that
+	// (20, 60, 100, 140, 180, 220). The signal strength is the cycle number multiplied by the content
+	// of the devices register, X. The device takes two commands:
+	//   - "addx N" adds N to the value of the register and takes two cycles to complete.
+	//     During processing the value of the register is not changed. N can be negative.
+	//   - "noop" does nothing and takes one cycle to complete.
+	//
+	// First, find the sum of the interesting signal strengths.
+	public static void day10()
+	{
+		Console.WriteLine("\n  Day 10: Cathode-Ray Tube:\n");
+
+		List<string> input = Files.GetContentAsList("input/day-10.txt");
+
+		List<string> testInput = Files.GetContentAsList("input/day-10-test.txt");
+
+		crt.Device device = new crt.Device(testInput);
+
+		crt.Measurement m = device.run();
+
+		int[] want = new int[] { 420, 1140, 1800, 2940, 2880, 3960 };
+
+		bool ok = true;
+		int i = 0;
+		foreach (int w in want)
+		{
+			Console.WriteLine($"Reading {i}: {m[i]}");
+			if (m[i] != w)
+			{
+				ok = false;
+			}
+		}
+		Console.WriteLine($"Test measurement: {m}, test {(m.Sum == 13140 && ok ? "OK" : "NOT OK")}");
 	}
 }

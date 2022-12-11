@@ -6,4 +6,5 @@
 /* Solutions.day6(); */
 /* Solutions.day7(); */
 /* Solutions.day8(); */
-Solutions.day9();
+/* Solutions.day9(); */
+Solutions.day10();
