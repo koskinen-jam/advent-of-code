@@ -344,6 +344,12 @@ public class Solutions
 	//   - "noop" does nothing and takes one cycle to complete.
 	//
 	// First, find the sum of the interesting signal strengths.
+	//
+	// Second, find which 8 capital letters the program draws on a 40x6 screen that is drawn to when
+	// a sprite coincides with the pixel being drawn. One pixel is drawn every cycle, starting from
+	// top left and going left to right, row by row. The sprite is three pixels wide and the location
+	// of its middle pixel on the row being drawn is determined by the value of the register during
+	// the cycle. The pixel is drawn before executing instructions.
 	public static void day10()
 	{
 		Console.WriteLine("\n  Day 10: Cathode-Ray Tube:\n");

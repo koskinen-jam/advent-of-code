@@ -7,4 +7,5 @@
 /* Solutions.day7(); */
 /* Solutions.day8(); */
 /* Solutions.day9(); */
-Solutions.day10();
+/* Solutions.day10(); */
+Solutions.day11();
