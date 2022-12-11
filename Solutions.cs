@@ -5,6 +5,7 @@ using drt = DirectoryTree;
 using thm = TreeHeightMap;
 using rb = RopeBridge;
 using crt = CathodeRayTube;
+using mb = MonkeyBusiness;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -384,5 +385,31 @@ public class Solutions
 		Console.WriteLine($"\nProgram result:\n{m}");
 
 		Console.WriteLine($"\nDisplay shows:\n{device.Screen}");
+	}
+
+	public static void day11()
+	{
+		Console.WriteLine("\n  Day 11: Monkey in the Middle:\n");
+
+		List<string> input = Files.GetContentAsList("input/day-11.txt");
+
+		List<string> testInput = Files.GetContentAsList("input/day-11-test.txt");
+
+		mb.Monkey.ParseMonkeys(testInput);
+		mb.Monkey.ShowAll();
+
+		mb.Monkey.Rounds(20);
+
+		Console.Write($"Test: Monkey business score after 20 rounds: {mb.Monkey.BusinessScore()}");
+		Console.WriteLine($" {(mb.Monkey.BusinessScore() == 10605 ? "OK" : "NOT OK (want 10605)")}");
+
+		mb.Monkey.Reset();
+		mb.Monkey.ParseMonkeys(input);
+		mb.Monkey.ShowAll();
+
+		/* mb.Monkey.Verbose = true; */
+		mb.Monkey.Rounds(20);
+
+		Console.Write($"\nMonkey business score after 20 rounds: {mb.Monkey.BusinessScore()}");
 	}
 }
