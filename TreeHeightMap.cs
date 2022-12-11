@@ -104,6 +104,23 @@ namespace TreeHeightMap
 		{
 			return new Offset(1, 0);
 		}
+
+		public static Offset Parse(string s)
+		{
+			switch (s)
+			{
+				case "U":
+					return Up();
+				case "D":
+					return Down();
+				case "L":
+					return Left();
+				case "R":
+					return Right();
+				default:
+					throw new Exception($"Unknown direction {s}");
+			}
+		}
 	}
 
 	// Shorthand names for cardinal directions
@@ -143,18 +160,25 @@ namespace TreeHeightMap
 				return new Offset[] {N, E, S, W};
 			}
 		}
+
 	}
 
 	// 2D point
 	public class Point
 	{
-		public int X { get; }
-		public int Y { get; }
+		public int X { get; protected set; }
+		public int Y { get; protected set; }
 
 		public Point(int x, int y)
 		{
 			X = x;
 			Y = y;
+		}
+
+		// Clone this point
+		public Point Clone()
+		{
+			return new Point(X, Y);
 		}
 
 		// Return next point after applying offset to this one
@@ -173,6 +197,37 @@ namespace TreeHeightMap
 		public override string ToString()
 		{
 			return $"[{X}, {Y}]";
+		}
+
+		// Point + Offset => Point
+		public static Point operator +(Point a, Offset o) => new Point(a.X + o.dX, a.Y + o.dY);
+	}
+
+	// Comparator used by HashSets to exclude equal points
+	public class PointsEqual : EqualityComparer<Point>
+	{
+		// Returns true if two points have the same coordinates
+		public override bool Equals(Point? a, Point? b)
+		{
+			if (a == null && b == null)
+			{
+				return true;
+			}
+			else if (a == null || b == null)
+			{
+				return false;
+			}
+			else
+			{
+				return a.X == b.X && a.Y == b.Y;
+			}
+		}
+
+		// If Equals(a, b) == true, GetHashCode(a) must equal GetHashCode(b)
+		public override int GetHashCode(Point p)
+		{
+			int hCode = p.X ^ p.Y;
+			return hCode.GetHashCode();
 		}
 	}
 

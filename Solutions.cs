@@ -3,6 +3,7 @@ using rck = Rucksack;
 using sps = SupplyStacks;
 using drt = DirectoryTree;
 using thm = TreeHeightMap;
+using rb = RopeBridge;
 
 // Solutions for advent of code (2022) puzzles
 public class Solutions
@@ -299,5 +300,38 @@ public class Solutions
 
 		Console.WriteLine($"Tree with best scenic score:\n{map.TreeWithHighestScenicScore}");
 
+	}
+
+	// A rope is represented by two points, tail and end, on a 2D grid. The tail must always be adjacent
+	// to the head horizontally, vertically or diagonally, or be overlapping it. If the head is two squares
+	// away in a cardinal direction, the tail moves one square in that direction to catch up. If the head
+	// is two squares away in one direction and one square in another, the tail moves diagonally to catch
+	// up.
+	//
+	// The head and tail start in the same square.
+	//
+	// Given a list of moves the head makes, find the number of unique squares the tail visits when
+	// the moves are executed.
+	//
+	// Then do the same with a ten-point rope!
+	public static void day9()
+	{
+		Console.WriteLine("\n  Day 9: Rope Bridge\n");
+
+		List<string> input = Files.GetContentAsList("input/day-9.txt");
+
+		rb.Rope r = new rb.Rope(2);
+
+		r.Move(input);
+
+		Console.WriteLine("\tRope with 2 segments:\n");
+		r.Show();
+
+		r = new rb.Rope(10);
+
+		r.Move(input);
+
+		Console.WriteLine("\tRope with 10 segments:\n");
+		r.Show();
 	}
 }
