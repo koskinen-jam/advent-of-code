@@ -354,7 +354,7 @@ public class Solutions
 
 		crt.Device device = new crt.Device(testInput);
 
-		crt.Measurement m = device.run();
+		crt.Measurement m = device.Run();
 
 		int[] want = new int[] { 420, 1140, 1800, 2940, 2880, 3960 };
 
@@ -362,12 +362,21 @@ public class Solutions
 		int i = 0;
 		foreach (int w in want)
 		{
-			Console.WriteLine($"Reading {i}: {m[i]}");
 			if (m[i] != w)
 			{
 				ok = false;
 			}
+			i++;
 		}
 		Console.WriteLine($"Test measurement: {m}, test {(m.Sum == 13140 && ok ? "OK" : "NOT OK")}");
+
+		device.Program = input;
+
+		m = new crt.Measurement(new crt.SpecificCyclesSchedule(new int[] { 20, 60, 100, 140, 180, 220 }));
+		m = device.Run(m);
+
+		Console.WriteLine($"\nProgram result:\n{m}");
+
+		Console.WriteLine($"\nDisplay shows:\n{device.Screen}");
 	}
 }
